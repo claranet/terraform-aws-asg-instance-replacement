@@ -20,7 +20,7 @@ def lambda_handler(event, context):
                 InstanceIds=[instance_id]
             )
             for instance in instances:
-                asg_name = instances['AutoScalingGroupName']
+                asg_name = instance['AutoScalingGroupName']
                 break
 
     # If this is an ASG or EC2 event then manage just the one ASG.
