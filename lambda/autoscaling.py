@@ -90,8 +90,9 @@ class AutoScalingGroup(dict):
             suspended_processes = set()
             for process in self['SuspendedProcesses']:
                 suspended_processes.add(process['ProcessName'])
-            if self.SCALING_PROCESSES - suspended_processes:
-                return True
+            for process in self.SCALING_PROCESSES:
+                if process not in suspended_processes:
+                    return True
         return False
 
     @lazyproperty
