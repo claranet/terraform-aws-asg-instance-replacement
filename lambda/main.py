@@ -178,8 +178,9 @@ def replace_old_instances(asg):
         else:
             instance = asg.instances.old
         asg.log(
-            'setting old instance {} to unhealthy',
+            'setting old instance {} {} to unhealthy',
             instance['InstanceId'],
+            asg.get_instance_status(instance),
         )
         asg.set_instance_unhealthy(instance)
 
