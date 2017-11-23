@@ -15,7 +15,7 @@ class lazyproperty(object):
         if obj is None:
             return self
         value = self._function(obj)
-        setattr(obj, self._function.func_name, value)
+        setattr(obj, self._function.__name__, value)
         return value
 
 
