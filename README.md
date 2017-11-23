@@ -8,6 +8,14 @@ It sets old instances as unhealthy one at a time to gradually replace them with 
 
 It waits for new instances to be completely healthy, ready and in service before proceeding to replace more instances. It will wait for ASG lifecycle hooks and Target Group health checks if they are being used.
 
+## Caution
+
+__Use this module with caution; it terminates healthy instances.__
+
+Care must be taken when using this module with certain types of instances, such as RabbitMQ and Elasticsearch cluster nodes. If these instances are using only ephemeral storage, then terminating them too quickly could result in data loss.
+
+In this situation, use Auto Scaling Lifecycle Hooks on the instances to wait until everything is truly healthy (e.g. cluster status green) before putting the instance "in service".
+
 ## Components
 
 ### Lambda function
