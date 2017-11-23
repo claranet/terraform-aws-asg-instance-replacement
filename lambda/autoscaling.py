@@ -101,7 +101,7 @@ class AutoScalingGroup(dict):
 
         """
 
-        result = {}
+        result = collections.defaultdict(list)
 
         targets = []
         for instance in self['Instances']:
@@ -116,8 +116,6 @@ class AutoScalingGroup(dict):
             )
             for target_health_description in target_health_descriptions:
                 instance_id = target_health_description['Target']['Id']
-                if instance_id not in result:
-                    result[instance_id] = []
                 result[instance_id].append(target_health_description)
 
         return result
