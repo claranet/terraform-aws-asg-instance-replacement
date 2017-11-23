@@ -154,7 +154,7 @@ class AutoScalingGroup(dict):
         """
 
         response = autoscaling.update_auto_scaling_group(
-            AutoScalingGroupName=self.name,
+            AutoScalingGroupName=self['AutoScalingGroupName'],
             DesiredCapacity=self['DesiredCapacity'] + 1,
         )
         if response['ResponseMetadata']['HTTPStatusCode'] != 200:
@@ -177,7 +177,7 @@ class AutoScalingGroup(dict):
         """
 
         kwargs = {
-            'AutoScalingGroupName': self.name,
+            'AutoScalingGroupName': self['AutoScalingGroupName'],
         }
         if scaling_processes:
             kwargs['ScalingProcesses'] = scaling_processes
