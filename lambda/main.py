@@ -1,6 +1,6 @@
+import autoscaling
+import ec2
 import itertools
-
-from . import autoscaling, ec2
 
 
 def lambda_handler(event, context):

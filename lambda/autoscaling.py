@@ -1,7 +1,6 @@
 import boto3
 import collections
-
-from . import elb
+import elb
 
 
 autoscaling = boto3.client('autoscaling')
