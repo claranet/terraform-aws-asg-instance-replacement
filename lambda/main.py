@@ -35,7 +35,8 @@ def lambda_handler(event, context):
     # Replace any old instances in any of the ASGs.
     for asg in asgs:
         asg = autoscaling.AutoScalingGroup(asg)
-        replace_old_instances(asg)
+        if asg.is_managed:
+            replace_old_instances(asg)
 
 
 def replace_old_instances(asg):
