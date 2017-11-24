@@ -173,10 +173,11 @@ def replace_old_instances(asg):
 
         # State D: teminate one old instance
 
-        if asg.instances.old.unready:
-            instance = asg.instances.old.unready[0]
-        else:
-            instance = asg.instances.old
+        instances_in_termination_order = itertools.chain(
+            asg.instances.old.unready,
+            asg.instances.old,
+        )
+        instance = next(instances_in_termination_order)
         asg.log(
             'setting old instance {} {} to unhealthy',
             instance['InstanceId'],
