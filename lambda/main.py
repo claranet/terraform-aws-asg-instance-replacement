@@ -90,8 +90,9 @@ def replace_old_instances(asg):
 
             if status == 'LifecycleState:Terminating':
                 asg.log(
-                    'max size exceeded, waiting for instance {} to terminate',
+                    'max size exceeded, waiting for instance {} {} to terminate',
                     instance_id,
+                    status,
                 )
             else:
                 asg.log(
@@ -162,7 +163,7 @@ def replace_old_instances(asg):
 
         for instance in asg.instances.old.terminating:
             asg.log(
-                'waiting for old instance {} to terminate, {}',
+                'waiting for old instance {} {} to terminate',
                 instance['InstanceId'],
                 asg.get_instance_status(instance),
             )
