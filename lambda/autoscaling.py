@@ -288,7 +288,7 @@ class InstanceList(collections.UserList):
         instances = []
         for instance in self:
             status = self.asg.get_instance_status(instance)
-            if status == self.asg.TERMINATING_STATUSES:
+            if status in self.asg.TERMINATING_STATUSES:
                 instances.append(instance)
         return self.__class__(instances, self.asg)
 
