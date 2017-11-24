@@ -48,7 +48,10 @@ class AutoScalingGroup(dict):
         'LifecycleState:Pending',
         'LifecycleState:PendingWait',
     ))
-    TERMINATING_STATUS = 'LifecycleState:Terminating'
+    TERMINATING_STATUSES = set((
+        'HealthStatus:Unhealthy',
+        'LifecycleState:Terminating',
+    ))
 
     @lazyproperty
     def instances(self):
@@ -259,7 +262,7 @@ class InstanceList(collections.UserList):
         instances = []
         for instance in self:
             status = self.asg.get_instance_status(instance)
-            if status == self.asg.TERMINATING_STATUS:
+            if status == self.asg.TERMINATING_STATUSES:
                 instances.append(instance)
         return self.__class__(instances, self.asg)
 
