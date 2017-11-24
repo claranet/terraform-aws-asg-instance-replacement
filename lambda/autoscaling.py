@@ -54,6 +54,26 @@ class AutoScalingGroup(dict):
     ))
 
     @lazyproperty
+    def instance_health(self):
+        """
+        Returns a dictionary of { InstanceId: [ InstanceState ] } using data
+        from any attached load balancers.
+
+        """
+
+        result = collections.defaultdict(list)
+
+        for load_balancer_name in self['LoadBalancerNames']:
+            instance_states = elb.describe_instance_health(
+                LoadBalancerName=load_balancer_name,
+            )
+            for instance_state in instance_states:
+                instance_id = instance_state['InstanceId']
+                result[instance_id].append(instance_state)
+
+        return result
+
+    @lazyproperty
     def instances(self):
         """
         Returns a list of instances in this ASG. The list has helper
@@ -102,6 +122,7 @@ class AutoScalingGroup(dict):
     def target_health(self):
         """
         Returns a dictionary of { InstanceId: [ TargetHealthDescription ] }
+        using data from any attached target groups.
 
         """
 
@@ -142,11 +163,16 @@ class AutoScalingGroup(dict):
             return 'HealthStatus:{}'.format(health_status)
 
         instance_id = instance['InstanceId']
+
         for desc in self.target_health[instance_id]:
             state = desc['TargetHealth']['State']
             if state != 'healthy':
                 reason = desc['TargetHealth']['Reason']
                 return 'TargetHealth:{}'.format(reason)
+
+        for state in self.instance_health[instance_id]:
+            if state['State'] != 'InService':
+                return 'InstanceHealth:{}'.format(state['ReasonCode'])
 
         return self.READY_STATUS
 

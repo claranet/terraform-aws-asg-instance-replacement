@@ -25,6 +25,7 @@ data "aws_iam_policy_document" "lambda" {
       "autoscaling:SuspendProcesses",
       "autoscaling:UpdateAutoScalingGroup",
       "ec2:TerminateInstances",
+      "elasticloadbalancing:DescribeInstanceHealth",
       "elasticloadbalancing:DescribeTargetHealth",
     ]
 
