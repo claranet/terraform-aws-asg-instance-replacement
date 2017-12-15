@@ -1,6 +1,6 @@
-# tf-aws-asg-instance-replacement
+# terraform-aws-asg-instance-replacement
 
-This module automatically replaces old instances when an Auto Scaling Group's Launch Configuration changes. In other words: rolling AMI updates and instance type changes.
+This Terraform module automatically replaces old instances when an Auto Scaling Group's Launch Configuration changes. In other words: rolling AMI updates and instance type changes.
 
 It tries to increase an ASG's desired capacity to launch new instances, but will never increase the maximum size, so it should be safe to use on just about any ASG.
 
