@@ -107,7 +107,7 @@ def replace_old_instances(asg):
             if len(terminating_instance_ids) == terminations_required:
                 break
 
-        # Next: State C
+        # Next: State C, wait for instance to terminate
 
     elif asg['DesiredCapacity'] < asg['MaxSize'] and not asg.instances.new:
 
@@ -124,7 +124,10 @@ def replace_old_instances(asg):
         asg.log('increasing desired capacity to add new instance')
         asg.increase_desired_capacity()
 
-        # Next: State B
+        asg.log('resuming launch scaling process')
+        asg.resume_processes(['Launch'])
+
+        # Next: State A or B or C, wait for new instance
 
     elif len(asg.instances) < asg['DesiredCapacity']:
 
@@ -136,7 +139,7 @@ def replace_old_instances(asg):
         asg.log('resuming launch scaling process')
         asg.resume_processes(['Launch'])
 
-        # Next: State C
+        # Next: State B or C, wait for new instance
 
     elif asg.instances.new.unready or asg.instances.old.terminating:
 
@@ -168,7 +171,8 @@ def replace_old_instances(asg):
                 asg.get_instance_status(instance),
             )
 
-        # Next: State D or E
+        # Next: State B or C, if old instance terminated, wait for new instance
+        #       State D or E, if new instance is ready, terminate old instance
 
     elif asg.instances.old:
 
@@ -186,7 +190,7 @@ def replace_old_instances(asg):
         )
         asg.set_instance_unhealthy(instance)
 
-        # Next: State C
+        # Next: State C, wait for instance to terminate
 
     elif asg['SuspendedProcesses']:
 
