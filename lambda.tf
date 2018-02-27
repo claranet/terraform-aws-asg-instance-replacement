@@ -1,5 +1,5 @@
 module "lambda" {
-  source = "github.com/claranet/terraform-aws-lambda?ref=v0.5.0"
+  source = "github.com/claranet/terraform-aws-lambda?ref=v0.8.2"
 
   function_name = "${var.name}"
   description   = "Manages ASG instance replacement"
