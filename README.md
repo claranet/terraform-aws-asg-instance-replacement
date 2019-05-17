@@ -59,6 +59,7 @@ resource "aws_autoscaling_group" "asg" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| name | Name to use for resources | string | `tf-aws-asg-instance-replacement` | no |
-| schedule | Schedule for running the Lambda function | string | `rate(1 minute)` | no |
-| timeout | Lambda function timeout | string | `60` | no |
+| lambda\_layers | List of Lambda Layer Version ARNs to attach to the Lambda Function | list | `<list>` | no |
+| name | Name to use for resources | string | `"tf-aws-asg-instance-replacement"` | no |
+| schedule | Schedule for running the Lambda function | string | `"rate(1 minute)"` | no |
+| timeout | Lambda function timeout | string | `"60"` | no |

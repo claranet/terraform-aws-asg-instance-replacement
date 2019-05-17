@@ -12,3 +12,8 @@ variable "timeout" {
   description = "Lambda function timeout"
   default     = "60"
 }
+
+variable "lambda_layers" {
+  description = "List of Lambda Layer Version ARNs to attach to the Lambda Function"
+  default     = []
+}
