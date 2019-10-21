@@ -8,6 +8,10 @@ It sets old instances as unhealthy one at a time to gradually replace them with 
 
 It waits for new instances to be completely healthy, ready and in service before proceeding to replace more instances. It will wait for ASG lifecycle hooks and Target Group health checks if they are being used.
 
+## Important
+
+Version `v1.0.0` of this module and above are not compatible with Terraform versions < `0.12.0`.  For earlier Terraform versions please use `v0.x.x` releases.
+
 ## Caution
 
 __Use this module with caution; it terminates healthy instances.__
