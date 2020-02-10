@@ -1,17 +1,17 @@
 module "lambda" {
   source = "github.com/claranet/terraform-aws-lambda?ref=v1.1.0"
 
-  function_name = "${var.name}"
+  function_name = var.name
   description   = "Manages ASG instance replacement"
   handler       = "main.lambda_handler"
   runtime       = "python3.6"
-  layers        = "${var.lambda_layers}"
-  timeout       = "${var.timeout}"
+  layers        = var.lambda_layers
+  timeout       = var.timeout
 
   source_path = "${path.module}/lambda"
 
   policy = {
-    json = "${data.aws_iam_policy_document.lambda.json}"
+    json = data.aws_iam_policy_document.lambda.json
   }
 }
 
