@@ -4,7 +4,7 @@ module "lambda" {
   function_name = var.name
   description   = "Manages ASG instance replacement"
   handler       = "main.lambda_handler"
-  runtime       = "python3.6"
+  runtime       = var.python_version
   layers        = var.lambda_layers
   timeout       = var.timeout
 
