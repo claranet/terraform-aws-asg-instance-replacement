@@ -17,3 +17,9 @@ variable "lambda_layers" {
   description = "List of Lambda Layer Version ARNs to attach to the Lambda Function"
   default     = []
 }
+
+variable "python_version" {
+  type        = string
+  description = "Specify the Python version to be used"
+  default     = "python3.9"
+}
